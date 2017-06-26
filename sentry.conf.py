@@ -171,7 +171,6 @@ if rabbitmq:
 else:
     BROKER_URL = 'redis://:' + redis_password + '@' + redis + ':' + redis_port + '/' + redis_db
 
-
 ###############
 # Rate Limits #
 ###############
@@ -287,6 +286,15 @@ if SENTRY_OPTIONS['mail.enable-replies']:
 secret_key = env('SENTRY_SECRET_KEY')
 if not secret_key:
     raise Exception('Error: SENTRY_SECRET_KEY is undefined, run `generate-secret-key` and set to -e SENTRY_SECRET_KEY')
+
+###############
+# Session     #
+###############
+
+import socket
+SESSION_COOKIE_NAME = 'sessionid' + socket.gethostname()
+USE_X_FORWARDED_HOST = True
+USE_X_FORWARDED_PORT = True
 
 if 'SENTRY_RUNNING_UWSGI' not in os.environ and len(secret_key) < 32:
     print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
