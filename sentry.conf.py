@@ -293,7 +293,7 @@ if not secret_key:
 ###############
 
 import socket
-SESSION_COOKIE_NAME = 'sessionid' + str(SENTRY_WEB_PORT) + socket.gethostname()
+SESSION_COOKIE_NAME = 'sessionid' + socket.gethostname()
 USE_X_FORWARDED_HOST = True
 USE_X_FORWARDED_PORT = True
 
