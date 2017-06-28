@@ -243,9 +243,10 @@ if Bool(env('SENTRY_USE_SSL', False)):
     SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
 
 SENTRY_WEB_HOST = '0.0.0.0'
-SENTRY_WEB_PORT = 9000
+SENTRY_WEB_PORT = int(env('SENTRY_WEB_PORT') or 9000)
+SENTRY_WEB_WORKERS = int(env('SENTRY_WEB_WORKERS') or 10)
 SENTRY_WEB_OPTIONS = {
-    'workers': 8,  # the number of web workers
+    'workers': SENTRY_WEB_WORKERS,  # the number of web workers
 }
 
 ###############
@@ -292,7 +293,7 @@ if not secret_key:
 ###############
 
 import socket
-SESSION_COOKIE_NAME = 'sessionid' + socket.gethostname()
+SESSION_COOKIE_NAME = 'sessionid' + str(SENTRY_WEB_PORT) + socket.gethostname()
 USE_X_FORWARDED_HOST = True
 USE_X_FORWARDED_PORT = True
 
